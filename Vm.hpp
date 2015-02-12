@@ -3,33 +3,43 @@
 /*    ██╗  ██╗██████╗   █████╗ ██╗   ██╗                                      */
 /*    ██║  ██║╚════██╗ ██╔══██╗██║   ██║                                      */
 /*    ███████║ █████╔╝ ███████║██║   ██║       by: bgronon                    */
-/*    ╚════██║██╔═══╝  ██╔══██║╚██╗ ██╔╝       at: 2015/02/12 10:59:52        */
+/*    ╚════██║██╔═══╝  ██╔══██║╚██╗ ██╔╝       at: 2015/02/12 12:05:38        */
 /*         ██║███████╗ ██║  ██║ ╚████╔╝                                       */
 /*         ╚═╝╚══════╝ ╚═╝  ╚═╝  ╚═══╝                                        */
 /*                                                                            */
 /* ========================================================================== */
 
-#ifndef IOPERAND
-# define IOPERAND
+#ifndef VM_CLASS
+# define VM_CLASS
 
-enum eOperandType { INT8 = 1, INT16, INT32, FLOAT, DOUBLE };
+# include <string>
+# include <map>
+# include "IOperand.hpp"
 
-class IOperand {
+class Vm {
 
 	public:
 
-		virtual int					getPrecision (void) const = 0;
-		virtual eOperandType		getType (void) const = 0;
+		static Vm & single (void);
 
-		virtual IOperand const *	operator+ (IOperand const & rhs) const = 0;
-		virtual IOperand const *	operator- (IOperand const & rhs) const = 0;
-		virtual IOperand const *	operator* (IOperand const & rhs) const = 0;
-		virtual IOperand const *	operator/ (IOperand const & rhs) const = 0;
-		virtual IOperand const *	operator% (IOperand const & rhs) const = 0;
+		Vm	(void);
+		Vm	(Vm const & ref);
+		~Vm	(void);
 
-		virtual std::string const &	toString (void) const = 0; // String representation of the instance
+		IOperand const *	createOperand (eOperandType type, std::string const & value) const;
 
-		virtual						~IOperand (void) {}
+	private:
+
+		Vm & operator= (Vm const & ref);
+
+		IOperand const *	createInt8   (std::string const & value) const;
+		IOperand const *	createInt16  (std::string const & value) const;
+		IOperand const *	createInt32  (std::string const & value) const;
+		IOperand const *	createFloat  (std::string const & value) const;
+		IOperand const *	createDouble (std::string const & value) const;
+
 };
+
+typedef IOperand const * (Vm::*VmFn)(std::string const & value) const;
 
 #endif

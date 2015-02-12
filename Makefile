@@ -11,11 +11,12 @@
 
 NAME		= avm
 CC			= g++
-FLAGS		= -Wall -Werror -Wextra
+FLAGS		= -Wall -Werror -Wextra -pedantic -std=c++11
 LIBS		=
 INC			= -I .
 
 SRC			=	main.cpp \
+				Vm.cpp \
 				Parser.cpp \
 
 DIR_OBJ		= .obj
@@ -25,7 +26,7 @@ OBJ			= $(addprefix $(DIR_OBJ)/, $(SRC:.cpp=.o))
 
 all: $(NAME)
 
-$(addprefix $(DIR_OBJ)/, %.o): %.cpp **/*.hpp
+$(addprefix $(DIR_OBJ)/, %.o): %.cpp **/*.hpp *.hpp
 	@printf "compiling \e[33m%-41s\e[0m" "$@..."
 	@$(CC) $(FLAGS) $(INC) -o $@ -c $<
 	@printf "\e[32m[✔]\e[0m\n"
