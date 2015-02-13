@@ -46,7 +46,6 @@ class Parser {
 				BadInputException (void);
 		};
 
-
 		class NoExitException: public ExecutionException {
 			public:
 				NoExitException (const char * file, int line)

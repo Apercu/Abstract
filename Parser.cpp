@@ -15,14 +15,23 @@
 
 Parser::Parser (char * str)
 {
+	std::ifstream	file;
+
 	if (str) {
-		std::ofstream file;
 		file.open(str);
 		if (!file.is_open()) {
 			throw Parser::BadInputException(__FILE__, __LINE__);
 		}
+	}
 
-	} else {
+	std::string line;
+	while (std::getline((str ? file : std::cin), line)) {
+		if (!line.compare(";;")) {
+			std::cout << "END" << std::endl;
+		} else if (line.at(0) != ';') {
+			std::cout << "not comment" << std::endl;
+		}
+		std::cout << line << std::endl;
 	}
 }
 

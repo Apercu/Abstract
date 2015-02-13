@@ -23,7 +23,6 @@ int main (int ac, char ** av)
 
 	try {
 		Parser p(av[1]);
-		throw Vm::NotEnoughOperandsException(__FILE__, __LINE__);
 	} catch (ExecutionException & e) {
 		std::cout << e.what() << std::endl;
 	} catch (SyntaxException & e) {
