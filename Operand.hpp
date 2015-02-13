@@ -27,6 +27,20 @@ class Operand: public IOperand {
 
 		Operand (eOperandType type, std::string const & val): _type(type), _str(val)
 		{
+			double				check;
+			std::stringstream	ss;
+
+			ss << val;
+			ss >> check;
+			if (check < std::numeric_limits<T>::lowest() || (type == INT8 && check < -127)) {
+				throw Operand::UnderflowException();
+			}
+			else if (check > std::numeric_limits<T>::max() || (type == INT8 && check > 128)) {
+				throw Operand::OverflowException();
+			}
+			else if (ss.fail()) {
+				throw Operand::InvalidException();
+			}
 		}
 
 		virtual ~Operand (void) {}
@@ -105,6 +119,30 @@ class Operand: public IOperand {
 			res << fmod(one, two);
 			return this->_renderOperand(type, res);
 		}
+
+		class UnderflowException: public std::exception {
+			public:
+				virtual const char * what (void) const throw ()
+				{
+					return ("Underflow error.");
+				}
+		};
+
+		class InvalidException: public std::exception {
+			public:
+				virtual const char * what (void) const throw ()
+				{
+					return ("Invalid numeric representation.");
+				}
+		};
+
+		class OverflowException: public std::exception {
+			public:
+				virtual const char * what (void) const throw ()
+				{
+					return ("Overflow error.");
+				}
+		};
 
 	private:
 

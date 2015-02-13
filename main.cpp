@@ -23,10 +23,10 @@ int main (int ac, char ** av)
 	Vm vm = Vm::single();
 
 	IOperand const * op = vm.createOperand(INT8, "20");
-	IOperand const * op2 = vm.createOperand(INT8, "22");
+	IOperand const * op2 = vm.createOperand(INT8, "12");
 
 	std::cout << op->toString() << std::endl;
-	std::cout << (*op / *op2)->toString() << std::endl;
+	std::cout << (*op + *op2)->toString() << std::endl;
 
 	delete op;
 
