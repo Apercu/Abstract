@@ -11,24 +11,24 @@
 
 #include <iostream>
 #include "Vm.hpp"
+#include "Parser.hpp"
 #include "abstract.hpp"
 
 int main (int ac, char ** av)
 {
-	VOID(av);
 	if (ac > 2) {
 		std::cout << "Please" << std::endl;
 	}
 
-	Vm vm = Vm::single();
-
-	IOperand const * op = vm.createOperand(INT8, "20");
-	IOperand const * op2 = vm.createOperand(INT8, "12");
-
-	std::cout << op->toString() << std::endl;
-	std::cout << (*op + *op2)->toString() << std::endl;
-
-	delete op;
+	try {
+		Parser p(av[1]);
+	} catch (ExecutionException & e) {
+		std::cout << "Execution error: " << e.what() << std::endl;
+	} catch (SyntaxException & e) {
+		std::cout << "A syntax error has been detected: " << e.what() << std::endl;
+	} catch (std::exception & e) {
+		std::cout << "An error occured: " << e.what() << std::endl;
+	}
 
 	return (0);
 }

@@ -99,6 +99,11 @@ void Vm::print (void) const
 	std::cout << static_cast<char>(res) << std::endl;
 }
 
+void Vm::exit (void)
+{
+	std::cout << "Exiting..." << std::endl;
+}
+
 void Vm::add (void)
 {
 	if (this->_stack.size() < 2) { throw Vm::NotEnoughOperandsException(); }

@@ -120,7 +120,7 @@ class Operand: public IOperand {
 			return this->_renderOperand(type, res);
 		}
 
-		class UnderflowException: public std::exception {
+		class UnderflowException: public ExecutionException {
 			public:
 				virtual const char * what (void) const throw ()
 				{
@@ -128,7 +128,7 @@ class Operand: public IOperand {
 				}
 		};
 
-		class InvalidException: public std::exception {
+		class InvalidException: public ExecutionException {
 			public:
 				virtual const char * what (void) const throw ()
 				{
@@ -136,7 +136,7 @@ class Operand: public IOperand {
 				}
 		};
 
-		class OverflowException: public std::exception {
+		class OverflowException: public ExecutionException {
 			public:
 				virtual const char * what (void) const throw ()
 				{

@@ -16,6 +16,7 @@
 # include <map>
 # include <list>
 # include "IOperand.hpp"
+# include "abstract.hpp"
 
 class Vm {
 
@@ -48,7 +49,7 @@ class Vm {
 		void div (void);
 		void mod (void);
 
-		class AssertException: public std::exception {
+		class AssertException: public ExecutionException {
 			public:
 				virtual const char * what (void) const throw ()
 				{
@@ -56,7 +57,7 @@ class Vm {
 				}
 		};
 
-		class EmptyStackException: public std::exception {
+		class EmptyStackException: public ExecutionException {
 			public:
 				virtual const char * what (void) const throw ()
 				{
@@ -64,7 +65,7 @@ class Vm {
 				}
 		};
 
-		class NotEnoughOperandsException: public std::exception {
+		class NotEnoughOperandsException: public ExecutionException {
 			public:
 				virtual const char * what (void) const throw ()
 				{

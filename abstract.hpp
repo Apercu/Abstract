@@ -14,4 +14,7 @@
 
 # define VOID(V)	static_cast<void>(V)
 
+class SyntaxException: public std::exception {};
+class ExecutionException: public std::exception {};
+
 #endif

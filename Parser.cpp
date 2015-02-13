@@ -9,10 +9,22 @@
 /*                                                                            */
 /* ========================================================================== */
 
+#include <iostream>
+#include <fstream>
 #include "Parser.hpp"
 
-Parser::Parser (void)
+Parser::Parser (char * str)
 {
+	if (str) {
+		std::ofstream file;
+		file.open(str);
+		if (!file.is_open()) {
+			throw Parser::BadInputException();
+		}
+
+	} else {
+		std::cout << "Pute" << std::endl;
+	}
 }
 
 Parser::~Parser (void)
