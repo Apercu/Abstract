@@ -19,11 +19,10 @@ Parser::Parser (char * str)
 		std::ofstream file;
 		file.open(str);
 		if (!file.is_open()) {
-			throw Parser::BadInputException();
+			throw Parser::BadInputException(__FILE__, __LINE__);
 		}
 
 	} else {
-		std::cout << "Pute" << std::endl;
 	}
 }
 

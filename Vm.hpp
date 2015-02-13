@@ -12,11 +12,13 @@
 #ifndef VM_CLASS
 # define VM_CLASS
 
+# include "IOperand.hpp"
+# include "abstract.hpp"
+
 # include <string>
 # include <map>
 # include <list>
-# include "IOperand.hpp"
-# include "abstract.hpp"
+# include <sstream>
 
 class Vm {
 
@@ -51,26 +53,75 @@ class Vm {
 
 		class AssertException: public ExecutionException {
 			public:
+				AssertException (const char * file, int line)
+				{
+					std::stringstream ss;
+					ss << "\033[37m\033[41m" << "Assert failed" << "\033[0m at \033[35mline " << line << "\033[0m of \033[35m" << file << "\033[0m.";
+					this->_msg = ss.str();
+				}
+
 				virtual const char * what (void) const throw ()
 				{
-					return ("The assert failed.");
+					return this->_msg.c_str();
 				}
+
+				AssertException (AssertException const & ref) { VOID(ref); }
+				~AssertException (void) {}
+
+			private:
+
+				std::string		_msg;
+
+				AssertException & operator= (AssertException const & ref);
+				AssertException (void);
 		};
 
-		class EmptyStackException: public ExecutionException {
-			public:
-				virtual const char * what (void) const throw ()
-				{
-					return ("The stack is empty.");
-				}
-		};
+			class EmptyStackException: public ExecutionException {
+				public:
+					EmptyStackException (const char * file, int line)
+					{
+						std::stringstream ss;
+						ss << "\033[37m\033[41m" << "The stack is empty, cannot perform your operation " << "\033[0m at \033[35mline " << line << "\033[0m of \033[35m" << file << "\033[0m.";
+						this->_msg = ss.str();
+					}
 
-		class NotEnoughOperandsException: public ExecutionException {
-			public:
+					virtual const char * what (void) const throw ()
+					{
+						return this->_msg.c_str();
+					}
+
+					EmptyStackException (EmptyStackException const & ref) { VOID(ref); }
+					~EmptyStackException (void) {}
+
+				private:
+					std::string		_msg;
+
+					EmptyStackException & operator= (EmptyStackException const & ref);
+					EmptyStackException (void);
+			};
+
+			class NotEnoughOperandsException: public ExecutionException {
+				public:
+					NotEnoughOperandsException (const char * file, int line)
+				{
+					std::stringstream ss;
+					ss << "\033[37m\033[41m" << "Not enough operands on the stack to make this operation " << "\033[0m at \033[35mline " << line << "\033[0m of \033[35m" << file << "\033[0m.";
+					this->_msg = ss.str();
+				}
+
 				virtual const char * what (void) const throw ()
 				{
-					return ("Not enough operands on the stack to make this operation.");
+					return this->_msg.c_str();
 				}
+
+				NotEnoughOperandsException (NotEnoughOperandsException const & ref) { VOID(ref); }
+				~NotEnoughOperandsException (void) {}
+
+			private:
+				std::string		_msg;
+
+				NotEnoughOperandsException & operator= (NotEnoughOperandsException const & ref);
+				NotEnoughOperandsException (void);
 		};
 
 	private:

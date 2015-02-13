@@ -12,6 +12,7 @@
 #include <iostream>
 #include "Vm.hpp"
 #include "Parser.hpp"
+#include "Operand.hpp"
 #include "abstract.hpp"
 
 int main (int ac, char ** av)
@@ -22,12 +23,13 @@ int main (int ac, char ** av)
 
 	try {
 		Parser p(av[1]);
+		throw Vm::NotEnoughOperandsException(__FILE__, __LINE__);
 	} catch (ExecutionException & e) {
-		std::cout << "Execution error: " << e.what() << std::endl;
+		std::cout << e.what() << std::endl;
 	} catch (SyntaxException & e) {
-		std::cout << "A syntax error has been detected: " << e.what() << std::endl;
+		std::cout << e.what() << std::endl;
 	} catch (std::exception & e) {
-		std::cout << "An error occured: " << e.what() << std::endl;
+		std::cout << e.what() << std::endl;
 	}
 
 	return (0);

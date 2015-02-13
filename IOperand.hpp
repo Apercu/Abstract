@@ -12,6 +12,8 @@
 #ifndef IOPERAND
 # define IOPERAND
 
+# include <string>
+
 enum eOperandType { INT8 = 1, INT16, INT32, FLOAT, DOUBLE };
 
 class IOperand {

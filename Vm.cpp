@@ -65,7 +65,7 @@ void Vm::push (IOperand const * op)
 void Vm::pop (void)
 {
 	if (this->_stack.size() < 1) {
-		throw Vm::EmptyStackException();
+		throw Vm::EmptyStackException(__FILE__, __LINE__);
 	}
 	delete *(this->_stack.begin());
 	this->_stack.pop_front();
@@ -83,7 +83,7 @@ void Vm::assert (IOperand const * op) const
 {
 	IOperand const * top = *(this->_stack.begin());
 	if (top->getType() != op->getType() && top->toString() != op->toString()) {
-		throw Vm::AssertException();
+		throw Vm::AssertException(__FILE__, __LINE__);
 	}
 }
 
@@ -106,7 +106,7 @@ void Vm::exit (void)
 
 void Vm::add (void)
 {
-	if (this->_stack.size() < 2) { throw Vm::NotEnoughOperandsException(); }
+	if (this->_stack.size() < 2) { throw Vm::NotEnoughOperandsException(__FILE__, __LINE__); }
 	IOperand const * one = *(this->_stack.begin());
 	IOperand const * two = *(std::next(this->_stack.begin()));
 	this->push(*one + *two);
@@ -114,7 +114,7 @@ void Vm::add (void)
 
 void Vm::sub (void)
 {
-	if (this->_stack.size() < 2) { throw Vm::NotEnoughOperandsException(); }
+	if (this->_stack.size() < 2) { throw Vm::NotEnoughOperandsException(__FILE__, __LINE__); }
 	IOperand const * one = *(this->_stack.begin());
 	IOperand const * two = *(std::next(this->_stack.begin()));
 	this->push(*one - *two);
@@ -122,7 +122,7 @@ void Vm::sub (void)
 
 void Vm::mul (void)
 {
-	if (this->_stack.size() < 2) { throw Vm::NotEnoughOperandsException(); }
+	if (this->_stack.size() < 2) { throw Vm::NotEnoughOperandsException(__FILE__, __LINE__); }
 	IOperand const * one = *(this->_stack.begin());
 	IOperand const * two = *(std::next(this->_stack.begin()));
 	this->push(*one * *two);
@@ -130,7 +130,7 @@ void Vm::mul (void)
 
 void Vm::div (void)
 {
-	if (this->_stack.size() < 2) { throw Vm::NotEnoughOperandsException(); }
+	if (this->_stack.size() < 2) { throw Vm::NotEnoughOperandsException(__FILE__, __LINE__); }
 	IOperand const * one = *(this->_stack.begin());
 	IOperand const * two = *(std::next(this->_stack.begin()));
 	this->push(*one / *two);
@@ -138,7 +138,7 @@ void Vm::div (void)
 
 void Vm::mod (void)
 {
-	if (this->_stack.size() < 2) { throw Vm::NotEnoughOperandsException(); }
+	if (this->_stack.size() < 2) { throw Vm::NotEnoughOperandsException(__FILE__, __LINE__); }
 	IOperand const * one = *(this->_stack.begin());
 	IOperand const * two = *(std::next(this->_stack.begin()));
 	this->push(*one % *two);
