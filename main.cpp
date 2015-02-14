@@ -54,7 +54,12 @@ SyntaxException::SyntaxException (const char * file, int line)
 SyntaxException::SyntaxException (SyntaxException const & ref)
 {
 	*this = ref;
+}
+
+SyntaxException & SyntaxException::operator= (SyntaxException const & ref)
+{
 	VOID(ref);
+	return *this;
 }
 
 SyntaxException::~SyntaxException (void)
@@ -76,7 +81,12 @@ ExecutionException::ExecutionException (const std::string &arg, const char * fil
 ExecutionException::ExecutionException (ExecutionException const & ref)
 {
 	*this = ref;
+}
+
+ExecutionException & ExecutionException::operator= (ExecutionException const & ref)
+{
 	VOID(ref);
+	return *this;
 }
 
 ExecutionException::~ExecutionException (void)

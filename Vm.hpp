@@ -36,12 +36,11 @@ class Vm {
 		void push (IOperand const * op);
 
 		void pop (void);
+		void dump (void);
 
-		void dump (void) const;
+		void assert (IOperand const * op);
 
-		void assert (IOperand const * op) const;
-
-		void print (void) const;
+		void print (void);
 
 		void exit (void);
 
@@ -66,5 +65,7 @@ class Vm {
 };
 
 typedef IOperand const * (Vm::*VmFn)(std::string const & value) const;
+typedef void (Vm::*VmBasics)(void);
+typedef void (Vm::*VmParams)(IOperand const * op);
 
 #endif

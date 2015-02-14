@@ -51,7 +51,6 @@ IOperand const *	Vm::createOperand (eOperandType type, std::string const & value
 	return (this->*(map[type]))(value);
 }
 
-
 void Vm::push (eOperandType type, std::string const & value)
 {
 	this->_stack.push_front(this->createOperand(type, value));
@@ -71,7 +70,7 @@ void Vm::pop (void)
 	this->_stack.pop_front();
 }
 
-void Vm::dump (void) const
+void Vm::dump (void)
 {
 	std::list<IOperand const *>::const_iterator it = this->_stack.begin();
 	while (it != this->_stack.end()) {
@@ -79,7 +78,7 @@ void Vm::dump (void) const
 	}
 }
 
-void Vm::assert (IOperand const * op) const
+void Vm::assert (IOperand const * op)
 {
 	IOperand const * top = *(this->_stack.begin());
 	if (top->getType() != op->getType() && top->toString() != op->toString()) {
@@ -87,7 +86,7 @@ void Vm::assert (IOperand const * op) const
 	}
 }
 
-void Vm::print (void) const
+void Vm::print (void)
 {
 	IOperand const * top = *(this->_stack.begin());
 	IOperand const * tmp = this->createOperand(INT8, top->toString());

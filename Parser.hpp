@@ -13,7 +13,9 @@
 # define PARSER_CLASS
 
 # include "abstract.hpp"
+# include "Vm.hpp"
 # include <sstream>
+# include <map>
 
 class Parser {
 
@@ -26,7 +28,12 @@ class Parser {
 
 	private:
 
-		std::string 		_filename;
+		char *								_filename;
+		std::map<std::string, VmBasics>		_firstMap;
+		std::map<std::string, VmParams>		_secondMap;
+
+		void	_finishJob	(std::ifstream & file);
+		void	_initJob	(std::ifstream & file);
 
 		Parser (Parser const & ref);
 		Parser & operator= (Parser const & ref);
