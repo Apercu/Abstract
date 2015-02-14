@@ -14,6 +14,9 @@
 
 # define VOID(V)	static_cast<void>(V)
 
+# define EXECEXCEPT(STR)	throw ExecutionException(STR, __FILE__, __LINE__);
+# define SYNTEXCEPT(STR)	throw SyntaxException(STR, __FILE__, __LINE__);
+
 class SyntaxException: public std::exception {
 	public:
 		SyntaxException (const char * file, int line);

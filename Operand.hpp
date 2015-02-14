@@ -33,13 +33,13 @@ class Operand: public IOperand {
 			ss << val;
 			ss >> check;
 			if (check < std::numeric_limits<T>::lowest() || (type == INT8 && check < -127)) {
-				throw ExecutionException("A wild underflow appears", __FILE__, __LINE__);
+				EXECEXCEPT("A wild underflow appears");
 			}
 			else if (check > std::numeric_limits<T>::max() || (type == INT8 && check > 128)) {
-				throw ExecutionException("A wild overflow appears", __FILE__, __LINE__);
+				EXECEXCEPT("A wild overflow appears");
 			}
 			else if (ss.fail()) {
-				throw ExecutionException("Invalid numeric representation", __FILE__, __LINE__);
+				EXECEXCEPT("Invalid numeric representation");
 			}
 		}
 
@@ -104,6 +104,9 @@ class Operand: public IOperand {
 			std::stringstream	res;
 
 			this->_gulpParams(one, two, type, rhs);
+			if (two == 0.0) {
+				EXECEXCEPT("Division by zero, and you're not called John Skeet");
+			}
 			res << (one / two);
 			return this->_renderOperand(type, res);
 		}
@@ -116,6 +119,9 @@ class Operand: public IOperand {
 			std::stringstream	res;
 
 			this->_gulpParams(one, two, type, rhs);
+			if (two == 0.0) {
+				EXECEXCEPT("Modulus by zero, and you're not called John Skeet");
+			}
 			res << fmod(one, two);
 			return this->_renderOperand(type, res);
 		}

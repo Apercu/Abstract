@@ -20,7 +20,7 @@ Parser::Parser (char * str): _filename(NULL)
 	if (str) {
 		file.open(str);
 		if (!file.is_open()) {
-			throw ExecutionException("The specified input can't be opened", __FILE__, __LINE__);
+			EXECEXCEPT("The specified input can't be opened");
 		}
 		this->_filename = str;
 		file.close();

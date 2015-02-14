@@ -5,7 +5,7 @@
 /*    ███████║ █████╔╝ ███████║██║   ██║       by: bgronon                    */
 /*    ╚════██║██╔═══╝  ██╔══██║╚██╗ ██╔╝       at: 2015/02/12 12:15:03        */
 /*         ██║███████╗ ██║  ██║ ╚████╔╝                                       */
-/*         ╚═╝╚══════╝ ╚═╝  ╚═╝  ╚═══╝                                        */
+	/*         ╚═╝╚══════╝ ╚═╝  ╚═╝  ╚═══╝                                        */
 /*                                                                            */
 /* ========================================================================== */
 
@@ -65,7 +65,7 @@ void Vm::push (IOperand const * op)
 void Vm::pop (void)
 {
 	if (this->_stack.size() < 1) {
-		throw ExecutionException("The stack is empty, cannot perform your operation", __FILE__, __LINE__);
+		EXECEXCEPT("The stack is empty, cannot perform your operation");
 	}
 	delete *(this->_stack.begin());
 	this->_stack.pop_front();
@@ -83,7 +83,7 @@ void Vm::assert (IOperand const * op) const
 {
 	IOperand const * top = *(this->_stack.begin());
 	if (top->getType() != op->getType() && top->toString() != op->toString()) {
-		throw ExecutionException("Assert failed", __FILE__, __LINE__);
+		EXECEXCEPT("Assert failed");
 	}
 }
 
@@ -106,7 +106,7 @@ void Vm::exit (void)
 
 void Vm::add (void)
 {
-	if (this->_stack.size() < 2) { throw ExecutionException("Not enough operands on the stack to make this operation", __FILE__, __LINE__); }
+	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation"); }
 	IOperand const * one = *(this->_stack.begin());
 	IOperand const * two = *(std::next(this->_stack.begin()));
 	this->push(*one + *two);
@@ -114,7 +114,7 @@ void Vm::add (void)
 
 void Vm::sub (void)
 {
-	if (this->_stack.size() < 2) { throw ExecutionException("Not enough operands on the stack to make this operation", __FILE__, __LINE__); }
+	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation"); }
 	IOperand const * one = *(this->_stack.begin());
 	IOperand const * two = *(std::next(this->_stack.begin()));
 	this->push(*one - *two);
@@ -122,7 +122,7 @@ void Vm::sub (void)
 
 void Vm::mul (void)
 {
-	if (this->_stack.size() < 2) { throw ExecutionException("Not enough operands on the stack to make this operation", __FILE__, __LINE__); }
+	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation"); }
 	IOperand const * one = *(this->_stack.begin());
 	IOperand const * two = *(std::next(this->_stack.begin()));
 	this->push(*one * *two);
@@ -130,7 +130,7 @@ void Vm::mul (void)
 
 void Vm::div (void)
 {
-	if (this->_stack.size() < 2) { throw ExecutionException("Not enough operands on the stack to make this operation", __FILE__, __LINE__); }
+	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation"); }
 	IOperand const * one = *(this->_stack.begin());
 	IOperand const * two = *(std::next(this->_stack.begin()));
 	this->push(*one / *two);
@@ -138,7 +138,7 @@ void Vm::div (void)
 
 void Vm::mod (void)
 {
-	if (this->_stack.size() < 2) { throw ExecutionException("Not enough operands on the stack to make this operation", __FILE__, __LINE__); }
+	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation"); }
 	IOperand const * one = *(this->_stack.begin());
 	IOperand const * two = *(std::next(this->_stack.begin()));
 	this->push(*one % *two);
