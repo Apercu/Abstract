@@ -63,17 +63,10 @@ void Parser::_parseThisLine (std::string & line)
 
 		std::string paramType = m.str(1);
 		std::string paramValue = m.str(2);
-		if (paramType == "float" || paramType == "double") {
-			if (!std::regex_match(paramValue, Z)) {
-				SYNTEXCEPT("The specified parameter does not match a valid type");
-			}
-			Vm::single().pushInstruction(this->_secondMap[instruction], Vm::single().createOperand(this->_thirdMap[paramType], paramValue));
-		} else {
-			if (!std::regex_match(paramValue, N)) {
-				SYNTEXCEPT("The specified parameter does not match a valid type");
-			}
-			Vm::single().pushInstruction(this->_secondMap[instruction], Vm::single().createOperand(this->_thirdMap[paramType], paramValue));
+		if (!std::regex_match(paramValue, (paramType == "float" || paramType == "double" ? Z : N))) {
+			SYNTEXCEPT("The specified parameter does not match a valid type");
 		}
+		Vm::single().pushInstruction(this->_secondMap[instruction], Vm::single().createOperand(this->_thirdMap[paramType], paramValue));
 	} else {
 		std::smatch m;
 		std::regex_search(line, m, basic);
