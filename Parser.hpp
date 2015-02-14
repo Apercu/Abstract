@@ -22,7 +22,11 @@ class Parser {
 		Parser	(char * str);
 		~Parser (void);
 
+		void doYourJob (void);
+
 	private:
+
+		std::string 		_filename;
 
 		Parser (Parser const & ref);
 		Parser & operator= (Parser const & ref);

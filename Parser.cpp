@@ -13,7 +13,7 @@
 #include <fstream>
 #include "Parser.hpp"
 
-Parser::Parser (char * str)
+Parser::Parser (char * str): _filename(NULL)
 {
 	std::ifstream	file;
 
@@ -22,10 +22,19 @@ Parser::Parser (char * str)
 		if (!file.is_open()) {
 			throw ExecutionException("The specified input can't be opened", __FILE__, __LINE__);
 		}
+		this->_filename = str;
+		file.close();
 	}
 
 	// "No exit instruction has been found within your program "
+}
 
+Parser::~Parser (void)
+{
+}
+
+void Parser::doYourJob (void)
+{
 	std::string line;
 
 	while (std::getline((str ? file : std::cin), line, '\0')) {
@@ -36,8 +45,4 @@ Parser::Parser (char * str)
 		}
 		std::cout << line << std::endl;
 	}
-}
-
-Parser::~Parser (void)
-{
 }
