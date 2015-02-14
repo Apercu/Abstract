@@ -18,7 +18,8 @@
 int main (int ac, char ** av)
 {
 	if (ac > 2) {
-		std::cout << "Please" << std::endl;
+		std::cout << "Please pass one or no arguments, is that complicated?" << std::endl;
+		return (-1);
 	}
 
 	try {

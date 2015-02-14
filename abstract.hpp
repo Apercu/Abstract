@@ -44,7 +44,7 @@ class ExecutionException: public std::exception {
 		ExecutionException (const std::string &arg, const char * file, int line)
 		{
 			std::stringstream ss;
-			ss << "\033[37m\033[41m" << arg << " \033[0m at \033[35mline " << line << "\033[0m of \033[35m" << file << "\033[0m.";
+			ss << "\033[37m\033[41m" << arg << "\033[0m\033[37m at \033[34mline " << line << "\033[0m\033[37m of \033[34m" << file << "\033[0m.";
 			this->_msg = ss.str();
 		}
 
