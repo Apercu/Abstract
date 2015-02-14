@@ -19,7 +19,7 @@
 
 class SyntaxException: public std::exception {
 	public:
-		SyntaxException (const char * file, int line);
+		SyntaxException (const std::string &arg, const char * file, int line);
 
 		virtual const char * what (void) const throw ();
 

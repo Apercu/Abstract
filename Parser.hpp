@@ -15,6 +15,7 @@
 # include "abstract.hpp"
 # include "Vm.hpp"
 # include <sstream>
+# include <fstream>
 # include <map>
 
 class Parser {
@@ -32,8 +33,9 @@ class Parser {
 		std::map<std::string, VmBasics>		_firstMap;
 		std::map<std::string, VmParams>		_secondMap;
 
-		void	_finishJob	(std::ifstream & file);
-		void	_initJob	(std::ifstream & file);
+		void	_finishJob		(std::ifstream & file);
+		void	_initJob		(std::ifstream & file);
+		void	_parseThisLine	(std::string & line);
 
 		Parser (Parser const & ref);
 		Parser & operator= (Parser const & ref);

@@ -10,7 +10,7 @@
 /* ========================================================================== */
 
 #include <iostream>
-#include <fstream>
+#include <regex>
 #include "Parser.hpp"
 
 Parser::Parser (char * str): _filename(str)
@@ -30,8 +30,43 @@ Parser::Parser (char * str): _filename(str)
 	this->_secondMap["assert"] = &Vm::assert;
 }
 
-Parser::~Parser (void)
+void Parser::_parseThisLine (std::string & line)
 {
+	std::regex basic("^(add|sub|mul|div|mod|print|exit|dump|pop)$");
+	std::regex high("^(push|assert)[ ]+(.*)$");
+
+	if (!std::regex_match(line, basic) && !std::regex_match(line, high)) {
+		SYNTEXCEPT("Unknow or incorrect instruction");
+	}
+
+	if (std::regex_match(line, high)) {
+
+		std::regex N("[-]?[0-9]+");
+		std::regex Z("[-]?[0-9]+[.]{1}[0-9]+");
+
+		std::smatch m;
+		std::regex_search(line, m, high);
+		std::regex type("(int8|int16|int32|float|double)\\((.*)\\)");
+
+		if (!std::regex_match(m.str(2), type)) {
+			SYNTEXCEPT("Your operation does not pass a valid parameter");
+		}
+
+		std::regex_search(m.str(2), m, type);
+
+		if (m.str(1) == "float" || m.str(1) == "double") {
+			if (!std::regex_match(m.str(2), Z)) {
+				SYNTEXCEPT("The specified parameter does not match a valid type");
+			}
+		} else {
+			if (!std::regex_match(m.str(2), N)) {
+				SYNTEXCEPT("The specified parameter does not match a valid type");
+			}
+		}
+
+	} else {
+		// push basic
+	}
 }
 
 void Parser::doYourJob (void)
@@ -41,8 +76,8 @@ void Parser::doYourJob (void)
 
 	this->_initJob(file);
 	while (std::getline((this->_filename ? file : std::cin), line) && line != ";;") {
-		if (line.at(0) != 59) {
-			std::cout << line << std::endl;
+		if (line.size() > 0 && line.at(0) != 59) {
+			this->_parseThisLine(line);
 		}
 	}
 	this->_finishJob(file);
@@ -63,4 +98,8 @@ void Parser::_finishJob (std::ifstream & file)
 	if (file) {
 		file.close();
 	}
+}
+
+Parser::~Parser (void)
+{
 }
