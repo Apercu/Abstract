@@ -111,6 +111,7 @@ void Parser::_finishJob (std::ifstream & file)
 		file.close();
 	}
 	Vm::single().execute();
+	Vm::single().check();
 }
 
 Parser::~Parser (void)

@@ -42,20 +42,20 @@ class Vm {
 		void push (eOperandType type, std::string const & value);
 		void push (IOperand const * op);
 
-		void pop (void);
-		void dump (void);
+		void pop	(void);
+		void dump	(void);
 
 		void assert (IOperand const * op);
 
-		void print (void);
+		void print	(void);
+		void exit	(void);
+		void check	(void);
 
-		void exit (void);
-
-		void add (void);
-		void sub (void);
-		void mul (void);
-		void div (void);
-		void mod (void);
+		void add	(void);
+		void sub	(void);
+		void mul	(void);
+		void div	(void);
+		void mod	(void);
 
 	private:
 

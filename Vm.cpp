@@ -126,7 +126,20 @@ void Vm::print (void)
 
 void Vm::exit (void)
 {
-	std::cout << "Exiting..." << std::endl;
+	for (std::list<IOperand const *>::const_iterator it = this->_stack.begin(); it != this->_stack.end(); ++it) {
+		delete *it;
+	}
+	for (std::list<Instruction *>::const_iterator it = this->_instructs.begin(); it != this->_instructs.end(); ++it) {
+		delete *it;
+	}
+	std::exit(0);
+}
+
+void Vm::check (void)
+{
+	if (!this->_instructs.size() || this->_instructs.back()->basic != &Vm::exit) {
+		EXECEXCEPT("You don't have any exit in your program, do you care about memory?");
+	}
 }
 
 void Vm::add (void)
