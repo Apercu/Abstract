@@ -16,6 +16,7 @@ LIBS		=
 INC			= -I .
 
 SRC			=	main.cpp \
+				Instruction.cpp \
 				Vm.cpp \
 				Parser.cpp \
 

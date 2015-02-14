@@ -3,45 +3,32 @@
 /*    ██╗  ██╗██████╗   █████╗ ██╗   ██╗                                      */
 /*    ██║  ██║╚════██╗ ██╔══██╗██║   ██║                                      */
 /*    ███████║ █████╔╝ ███████║██║   ██║       by: bgronon                    */
-/*    ╚════██║██╔═══╝  ██╔══██║╚██╗ ██╔╝       at: 2015/02/12 11:37:37        */
+/*    ╚════██║██╔═══╝  ██╔══██║╚██╗ ██╔╝       at: 2015/02/14 16:06:52        */
 /*         ██║███████╗ ██║  ██║ ╚████╔╝                                       */
 /*         ╚═╝╚══════╝ ╚═╝  ╚═╝  ╚═══╝                                        */
 /*                                                                            */
 /* ========================================================================== */
 
-#ifndef PARSER_CLASS
-# define PARSER_CLASS
+#ifndef INSTRUCTION_CLASS
+# define INSTRUCTION_CLASS
 
 # include "abstract.hpp"
-# include "Vm.hpp"
-# include <sstream>
-# include <fstream>
-# include <map>
 
-class Parser {
+class Instruction {
 
 	public:
 
-		Parser	(char * str);
-		~Parser (void);
+		Instruction (VmBasics fn, VmParams extra, IOperand const * op);
+		~Instruction (void);
 
-		void doYourJob (void);
+		VmBasics			basic;
+		VmParams			extra;
+		IOperand const *	param;
 
 	private:
 
-		char *								_filename;
-
-		std::map<std::string, VmBasics>		_firstMap;
-		std::map<std::string, VmParams>		_secondMap;
-		std::map<std::string, eOperandType>	_thirdMap;
-
-		void	_finishJob		(std::ifstream & file);
-		void	_initJob		(std::ifstream & file);
-		void	_parseThisLine	(std::string & line);
-
-		Parser (Parser const & ref);
-		Parser & operator= (Parser const & ref);
-		Parser (void);
+		Instruction (Instruction const & ref);
+		Instruction & operator= (Instruction const & ref);
 
 };
 

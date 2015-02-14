@@ -28,6 +28,12 @@ Parser::Parser (char * str): _filename(str)
 
 	this->_secondMap["push"] = &Vm::push;
 	this->_secondMap["assert"] = &Vm::assert;
+
+	this->_thirdMap["int8"] = INT8;
+	this->_thirdMap["int16"] = INT16;
+	this->_thirdMap["int32"] = INT32;
+	this->_thirdMap["float"] = FLOAT;
+	this->_thirdMap["double"] = DOUBLE;
 }
 
 void Parser::_parseThisLine (std::string & line)
@@ -47,6 +53,7 @@ void Parser::_parseThisLine (std::string & line)
 		std::smatch m;
 		std::regex_search(line, m, high);
 		std::regex type("(int8|int16|int32|float|double)\\((.*)\\)");
+		std::string instruction = m.str(1);
 
 		if (!std::regex_match(m.str(2), type)) {
 			SYNTEXCEPT("Your operation does not pass a valid parameter");
@@ -54,18 +61,23 @@ void Parser::_parseThisLine (std::string & line)
 
 		std::regex_search(m.str(2), m, type);
 
-		if (m.str(1) == "float" || m.str(1) == "double") {
-			if (!std::regex_match(m.str(2), Z)) {
+		std::string paramType = m.str(1);
+		std::string paramValue = m.str(2);
+		if (paramType == "float" || paramType == "double") {
+			if (!std::regex_match(paramValue, Z)) {
 				SYNTEXCEPT("The specified parameter does not match a valid type");
 			}
+			Vm::single().pushInstruction(this->_secondMap[instruction], Vm::single().createOperand(this->_thirdMap[paramType], paramValue));
 		} else {
-			if (!std::regex_match(m.str(2), N)) {
+			if (!std::regex_match(paramValue, N)) {
 				SYNTEXCEPT("The specified parameter does not match a valid type");
 			}
+			Vm::single().pushInstruction(this->_secondMap[instruction], Vm::single().createOperand(this->_thirdMap[paramType], paramValue));
 		}
-
 	} else {
-		// push basic
+		std::smatch m;
+		std::regex_search(line, m, basic);
+		Vm::single().pushInstruction(this->_firstMap[m.str(1)]);
 	}
 }
 
@@ -98,6 +110,7 @@ void Parser::_finishJob (std::ifstream & file)
 	if (file) {
 		file.close();
 	}
+	Vm::single().execute();
 }
 
 Parser::~Parser (void)

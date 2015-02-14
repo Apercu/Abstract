@@ -14,6 +14,20 @@
 
 # define VOID(V)	static_cast<void>(V)
 
+class Vm;
+
+# include "IOperand.hpp"
+
+typedef IOperand const * (Vm::*VmFn)(std::string const & value) const;
+typedef void (Vm::*VmBasics)(void);
+typedef void (Vm::*VmParams)(IOperand const * op);
+
+
+
+/* ----------------------- EXCEPTIONS BULLSHIT ------------------------------ */
+
+
+
 # define EXECEXCEPT(STR)	throw ExecutionException(STR, __FILE__, __LINE__);
 # define SYNTEXCEPT(STR)	throw SyntaxException(STR, __FILE__, __LINE__);
 

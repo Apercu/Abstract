@@ -11,6 +11,7 @@
 
 #include "Vm.hpp"
 #include "Operand.hpp"
+#include "Instruction.hpp"
 #include <iterator>
 
 Vm::Vm (void)
@@ -36,6 +37,30 @@ Vm & Vm::single (void)
 {
 	static Vm i;
 	return i;
+}
+
+void Vm::pushInstruction (VmBasics fn)
+{
+	this->_instructs.push_back(new Instruction(fn, NULL, NULL));
+}
+
+void Vm::pushInstruction (VmParams fn, IOperand const * op)
+{
+	this->_instructs.push_back(new Instruction(NULL, fn, op));
+}
+
+void Vm::execute (void)
+{
+	std::list<Instruction *>::iterator it = this->_instructs.begin();
+	while (it != this->_instructs.end()) {
+		Instruction * ins = *it;
+		if (ins->param) {
+			(this->*(ins->extra))(ins->param);
+		} else {
+			(this->*(ins->basic))();
+		}
+		++it;
+	}
 }
 
 IOperand const *	Vm::createOperand (eOperandType type, std::string const & value) const
@@ -75,6 +100,7 @@ void Vm::dump (void)
 	std::list<IOperand const *>::const_iterator it = this->_stack.begin();
 	while (it != this->_stack.end()) {
 		std::cout << (*it)->toString() << std::endl;
+		++it;
 	}
 }
 
@@ -106,41 +132,46 @@ void Vm::exit (void)
 void Vm::add (void)
 {
 	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation"); }
-	IOperand const * one = *(this->_stack.begin());
-	IOperand const * two = *(std::next(this->_stack.begin()));
-	this->push(*one + *two);
+	IOperand const * op = **(this->_stack.begin()) + **(std::next(this->_stack.begin()));
+	this->pop();
+	this->pop();
+	this->push(op);
 }
 
 void Vm::sub (void)
 {
 	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation"); }
-	IOperand const * one = *(this->_stack.begin());
-	IOperand const * two = *(std::next(this->_stack.begin()));
-	this->push(*one - *two);
+	IOperand const * op = **(this->_stack.begin()) - **(std::next(this->_stack.begin()));
+	this->pop();
+	this->pop();
+	this->push(op);
 }
 
 void Vm::mul (void)
 {
 	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation"); }
-	IOperand const * one = *(this->_stack.begin());
-	IOperand const * two = *(std::next(this->_stack.begin()));
-	this->push(*one * *two);
+	IOperand const * op = **(this->_stack.begin()) * **(std::next(this->_stack.begin()));
+	this->pop();
+	this->pop();
+	this->push(op);
 }
 
 void Vm::div (void)
 {
 	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation"); }
-	IOperand const * one = *(this->_stack.begin());
-	IOperand const * two = *(std::next(this->_stack.begin()));
-	this->push(*one / *two);
+	IOperand const * op = **(this->_stack.begin()) / **(std::next(this->_stack.begin()));
+	this->pop();
+	this->pop();
+	this->push(op);
 }
 
 void Vm::mod (void)
 {
 	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation"); }
-	IOperand const * one = *(this->_stack.begin());
-	IOperand const * two = *(std::next(this->_stack.begin()));
-	this->push(*one % *two);
+	IOperand const * op = **(this->_stack.begin()) % **(std::next(this->_stack.begin()));
+	this->pop();
+	this->pop();
+	this->push(op);
 }
 
 IOperand const * Vm::createInt8 (std::string const & value) const

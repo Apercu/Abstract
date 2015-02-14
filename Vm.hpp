@@ -13,6 +13,9 @@
 # define VM_CLASS
 
 # include "IOperand.hpp"
+
+class Instruction;
+
 # include "abstract.hpp"
 
 # include <string>
@@ -31,6 +34,10 @@ class Vm {
 		~Vm	(void);
 
 		IOperand const *	createOperand (eOperandType type, std::string const & value) const;
+
+		void pushInstruction	(VmBasics fn);
+		void pushInstruction	(VmParams fn, IOperand const * op);
+		void execute			(void);
 
 		void push (eOperandType type, std::string const & value);
 		void push (IOperand const * op);
@@ -53,6 +60,7 @@ class Vm {
 	private:
 
 		std::list<IOperand const *>		_stack;
+		std::list<Instruction *>		_instructs;
 
 		Vm & operator= (Vm const & ref);
 
@@ -63,9 +71,5 @@ class Vm {
 		IOperand const *	createDouble (std::string const & value) const;
 
 };
-
-typedef IOperand const * (Vm::*VmFn)(std::string const & value) const;
-typedef void (Vm::*VmBasics)(void);
-typedef void (Vm::*VmParams)(IOperand const * op);
 
 #endif
