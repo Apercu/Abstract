@@ -20,12 +20,15 @@ Parser::Parser (char * str)
 	if (str) {
 		file.open(str);
 		if (!file.is_open()) {
-			throw Parser::BadInputException(__FILE__, __LINE__);
+			throw ExecutionException("The specified input can't be opened", __FILE__, __LINE__);
 		}
 	}
 
+	// "No exit instruction has been found within your program "
+
 	std::string line;
-	while (std::getline((str ? file : std::cin), line)) {
+
+	while (std::getline((str ? file : std::cin), line, '\0')) {
 		if (!line.compare(";;")) {
 			std::cout << "END" << std::endl;
 		} else if (line.at(0) != ';') {
