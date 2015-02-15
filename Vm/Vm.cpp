@@ -46,7 +46,7 @@ int Vm::getLine (void) const
 
 void Vm::pushInstruction (VmBasics fn, int i)
 {
-	this->_instructs.push_back(new Instruction(fn, NULL, INT8, NULL, i));
+	this->_instructs.push_back(new Instruction(fn, NULL, INT8, "", i));
 }
 
 void Vm::pushInstruction (VmParams fn, eOperandType type, std::string value, int i)
