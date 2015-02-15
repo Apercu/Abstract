@@ -49,7 +49,7 @@ void Vm::pushInstruction (VmBasics fn, int i)
 	this->_instructs.push_back(new Instruction(fn, NULL, INT8, NULL, i));
 }
 
-void Vm::pushInstruction (VmParams fn, eOperandType type, std::string const & value, int i)
+void Vm::pushInstruction (VmParams fn, eOperandType type, std::string value, int i)
 {
 	this->_instructs.push_back(new Instruction(NULL, fn, type, value, i));
 }

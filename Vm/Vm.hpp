@@ -36,7 +36,7 @@ class Vm {
 		IOperand const *	createOperand (eOperandType type, std::string const & value) const;
 
 		void pushInstruction	(VmBasics fn, int i);
-		void pushInstruction	(VmParams fn, eOperandType type, std::string const & value, int i);
+		void pushInstruction	(VmParams fn, eOperandType type, std::string value, int i);
 		void execute			(void);
 		int  getLine			(void) const;
 
