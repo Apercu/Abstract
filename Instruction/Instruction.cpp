@@ -11,8 +11,8 @@
 
 #include "Instruction.hpp"
 
-Instruction::Instruction (VmBasics fn, VmParams extra, IOperand const * op, int line):
-	basic(fn), extra(extra), param(op), line(line)
+Instruction::Instruction (VmBasics fn, VmParams extra, eOperandType type, std::string const & val, int line):
+	basic(fn), extra(extra), type(type), value(val), line(line)
 {
 }
 

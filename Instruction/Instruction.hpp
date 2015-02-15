@@ -18,12 +18,15 @@ class Instruction {
 
 	public:
 
-		Instruction (VmBasics fn, VmParams extra, IOperand const * op, int line);
+		Instruction (VmBasics fn, VmParams extra, eOperandType type, std::string const & value, int line);
 		~Instruction (void);
 
 		VmBasics			basic;
 		VmParams			extra;
-		IOperand const *	param;
+
+		eOperandType		type;
+		std::string const &	value;
+
 		int					line;
 
 	private:

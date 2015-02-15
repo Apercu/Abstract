@@ -46,12 +46,12 @@ int Vm::getLine (void) const
 
 void Vm::pushInstruction (VmBasics fn, int i)
 {
-	this->_instructs.push_back(new Instruction(fn, NULL, NULL, i));
+	this->_instructs.push_back(new Instruction(fn, NULL, INT8, NULL, i));
 }
 
-void Vm::pushInstruction (VmParams fn, IOperand const * op, int i)
+void Vm::pushInstruction (VmParams fn, eOperandType type, std::string const & value, int i)
 {
-	this->_instructs.push_back(new Instruction(NULL, fn, op, i));
+	this->_instructs.push_back(new Instruction(NULL, fn, type, value, i));
 }
 
 void Vm::execute (void)
@@ -60,8 +60,8 @@ void Vm::execute (void)
 	while (it != this->_instructs.end()) {
 		Instruction * ins = *it;
 		this->_line = ins->line;
-		if (ins->param) {
-			(this->*(ins->extra))(ins->param);
+		if (ins->extra) {
+			(this->*(ins->extra))( this->createOperand(ins->type, ins->value) );
 		} else {
 			(this->*(ins->basic))();
 		}
