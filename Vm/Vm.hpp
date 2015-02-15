@@ -35,9 +35,10 @@ class Vm {
 
 		IOperand const *	createOperand (eOperandType type, std::string const & value) const;
 
-		void pushInstruction	(VmBasics fn);
-		void pushInstruction	(VmParams fn, IOperand const * op);
+		void pushInstruction	(VmBasics fn, int i);
+		void pushInstruction	(VmParams fn, IOperand const * op, int i);
 		void execute			(void);
+		int  getLine			(void) const;
 
 		void push (eOperandType type, std::string const & value);
 		void push (IOperand const * op);
@@ -59,6 +60,7 @@ class Vm {
 
 	private:
 
+		int								_line;
 		std::list<IOperand const *>		_stack;
 		std::list<Instruction *>		_instructs;
 

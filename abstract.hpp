@@ -24,16 +24,14 @@ typedef void (Vm::*VmParams)(IOperand const * op);
 
 
 
-/* ----------------------- EXCEPTIONS BULLSHIT ------------------------------ */
+/* ----------------------------- EXCEPTIONS --------------------------------- */
 
-
-
-# define EXECEXCEPT(STR)	throw ExecutionException(STR, __FILE__, __LINE__);
-# define SYNTEXCEPT(STR)	throw SyntaxException(STR, __FILE__, __LINE__);
+# define EXECEXCEPT(STR, NB)	throw ExecutionException(STR, NB, __FILE__, __LINE__);
+# define SYNTEXCEPT(STR, NB)	throw SyntaxException(STR, NB, __FILE__, __LINE__);
 
 class SyntaxException: public std::exception {
 	public:
-		SyntaxException (const std::string &arg, const char * file, int line);
+		SyntaxException (const std::string &arg, int nb, const char * file, int line);
 
 		virtual const char * what (void) const throw ();
 
@@ -49,7 +47,7 @@ class SyntaxException: public std::exception {
 
 class ExecutionException: public std::exception {
 	public:
-		ExecutionException (const std::string &arg, const char * file, int line);
+		ExecutionException (const std::string &arg, int nb, const char * file, int line);
 
 		virtual const char * what (void) const throw ();
 

@@ -37,17 +37,12 @@ int main (int ac, char ** av)
 	return (0);
 }
 
+/* ============================== Exceptions ================================ */
 
-
-
-
-
-/* ======================== Exceptions bullshit ============================= */
-
-SyntaxException::SyntaxException (const std::string &arg, const char * file, int line)
+SyntaxException::SyntaxException (const std::string &arg, int nb, const char * file, int line)
 {
 	std::stringstream ss;
-	ss << "\033[37m\033[41m" << arg << "\033[0m at \033[35mline " << line << "\033[0m of \033[35m" << file << "\033[0m.";
+	ss << "\033[30m" << arg << "\033[0m at L" << nb << " (throwed at \033[35mline " << line << "\033[0m of \033[35m" << file << "\033[0m).";
 	this->_msg = ss.str();
 }
 
@@ -71,10 +66,10 @@ const char * SyntaxException::what (void) const throw ()
 	return this->_msg.c_str();
 }
 
-ExecutionException::ExecutionException (const std::string &arg, const char * file, int line)
+ExecutionException::ExecutionException (const std::string &arg, int nb, const char * file, int line)
 {
 	std::stringstream ss;
-	ss << "\033[37m\033[41m" << arg << "\033[0m\033[37m at \033[34mline " << line << "\033[0m\033[37m of \033[34m" << file << "\033[0m.";
+	ss << "\033[31m" << arg << "\033[0m\033[37m at L" << nb << " (throwed at \033[34mline " << line << "\033[0m\033[37m of \033[34m" << file << "\033[0m).";
 	this->_msg = ss.str();
 }
 

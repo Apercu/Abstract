@@ -36,13 +36,13 @@ Parser::Parser (char * str): _filename(str)
 	this->_thirdMap["double"] = DOUBLE;
 }
 
-void Parser::_parseThisLine (std::string & line)
+void Parser::_parseThisLine (std::string & line, int i)
 {
 	std::regex basic("^(add|sub|mul|div|mod|print|exit|dump|pop)$");
 	std::regex high("^(push|assert)[ ]+(.*)$");
 
 	if (!std::regex_match(line, basic) && !std::regex_match(line, high)) {
-		SYNTEXCEPT("Unknow or incorrect instruction");
+		SYNTEXCEPT("Unknow or incorrect instruction", i);
 	}
 
 	if (std::regex_match(line, high)) {
@@ -56,7 +56,7 @@ void Parser::_parseThisLine (std::string & line)
 		std::string instruction = m.str(1);
 
 		if (!std::regex_match(m.str(2), type)) {
-			SYNTEXCEPT("Your operation does not pass a valid parameter");
+			SYNTEXCEPT("Your operation does not pass a valid parameter", i);
 		}
 
 		std::regex_search(m.str(2), m, type);
@@ -64,13 +64,13 @@ void Parser::_parseThisLine (std::string & line)
 		std::string paramType = m.str(1);
 		std::string paramValue = m.str(2);
 		if (!std::regex_match(paramValue, (paramType == "float" || paramType == "double" ? Z : N))) {
-			SYNTEXCEPT("The specified parameter does not match a valid type");
+			SYNTEXCEPT("The specified parameter does not match a valid type", i);
 		}
-		Vm::single().pushInstruction(this->_secondMap[instruction], Vm::single().createOperand(this->_thirdMap[paramType], paramValue));
+		Vm::single().pushInstruction(this->_secondMap[instruction], Vm::single().createOperand(this->_thirdMap[paramType], paramValue), i);
 	} else {
 		std::smatch m;
 		std::regex_search(line, m, basic);
-		Vm::single().pushInstruction(this->_firstMap[m.str(1)]);
+		Vm::single().pushInstruction(this->_firstMap[m.str(1)], i);
 	}
 }
 
@@ -78,12 +78,14 @@ void Parser::doYourJob (void)
 {
 	std::ifstream	file;
 	std::string		line;
+	int				i = 1;
 
 	this->_initJob(file);
 	while (std::getline((this->_filename ? file : std::cin), line) && line != ";;") {
 		if (line.size() > 0 && line.at(0) != 59) {
-			this->_parseThisLine(line);
+			this->_parseThisLine(line, i);
 		}
+		++i;
 	}
 	this->_finishJob(file);
 }
@@ -93,7 +95,7 @@ void Parser::_initJob (std::ifstream & file)
 	if (this->_filename) {
 		file.open(this->_filename);
 		if (!file.is_open()) {
-			EXECEXCEPT("The specified input can't be opened");
+			EXECEXCEPT("The specified input can't be opened", 0);
 		}
 	}
 }

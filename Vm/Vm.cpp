@@ -39,14 +39,19 @@ Vm & Vm::single (void)
 	return i;
 }
 
-void Vm::pushInstruction (VmBasics fn)
+int Vm::getLine (void) const
 {
-	this->_instructs.push_back(new Instruction(fn, NULL, NULL));
+	return this->_line;
 }
 
-void Vm::pushInstruction (VmParams fn, IOperand const * op)
+void Vm::pushInstruction (VmBasics fn, int i)
 {
-	this->_instructs.push_back(new Instruction(NULL, fn, op));
+	this->_instructs.push_back(new Instruction(fn, NULL, NULL, i));
+}
+
+void Vm::pushInstruction (VmParams fn, IOperand const * op, int i)
+{
+	this->_instructs.push_back(new Instruction(NULL, fn, op, i));
 }
 
 void Vm::execute (void)
@@ -54,6 +59,7 @@ void Vm::execute (void)
 	std::list<Instruction *>::iterator it = this->_instructs.begin();
 	while (it != this->_instructs.end()) {
 		Instruction * ins = *it;
+		this->_line = ins->line;
 		if (ins->param) {
 			(this->*(ins->extra))(ins->param);
 		} else {
@@ -89,7 +95,7 @@ void Vm::push (IOperand const * op)
 void Vm::pop (void)
 {
 	if (this->_stack.size() < 1) {
-		EXECEXCEPT("The stack is empty, cannot perform your operation");
+		EXECEXCEPT("The stack is empty, cannot perform your operation", this->_line);
 	}
 	delete *(this->_stack.begin());
 	this->_stack.pop_front();
@@ -108,7 +114,7 @@ void Vm::assert (IOperand const * op)
 {
 	IOperand const * top = *(this->_stack.begin());
 	if (top->getType() != op->getType() && top->toString() != op->toString()) {
-		EXECEXCEPT("Assert failed");
+		EXECEXCEPT("Assert failed", this->_line);
 	}
 }
 
@@ -138,13 +144,13 @@ void Vm::exit (void)
 void Vm::check (void)
 {
 	if (!this->_instructs.size() || this->_instructs.back()->basic != &Vm::exit) {
-		EXECEXCEPT("You don't have any exit in your program, do you care about memory?");
+		EXECEXCEPT("You don't have any exit in your program, do you care about memory?", this->_line);
 	}
 }
 
 void Vm::add (void)
 {
-	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation"); }
+	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation", this->_line); }
 	IOperand const * op = **(this->_stack.begin()) + **(std::next(this->_stack.begin()));
 	this->pop();
 	this->pop();
@@ -153,7 +159,7 @@ void Vm::add (void)
 
 void Vm::sub (void)
 {
-	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation"); }
+	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation", this->_line); }
 	IOperand const * op = **(this->_stack.begin()) - **(std::next(this->_stack.begin()));
 	this->pop();
 	this->pop();
@@ -162,7 +168,7 @@ void Vm::sub (void)
 
 void Vm::mul (void)
 {
-	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation"); }
+	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation", this->_line); }
 	IOperand const * op = **(this->_stack.begin()) * **(std::next(this->_stack.begin()));
 	this->pop();
 	this->pop();
@@ -171,7 +177,7 @@ void Vm::mul (void)
 
 void Vm::div (void)
 {
-	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation"); }
+	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation", this->_line); }
 	IOperand const * op = **(this->_stack.begin()) / **(std::next(this->_stack.begin()));
 	this->pop();
 	this->pop();
@@ -180,7 +186,7 @@ void Vm::div (void)
 
 void Vm::mod (void)
 {
-	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation"); }
+	if (this->_stack.size() < 2) { EXECEXCEPT("Not enough operands on the stack to make this operation", this->_line); }
 	IOperand const * op = **(this->_stack.begin()) % **(std::next(this->_stack.begin()));
 	this->pop();
 	this->pop();

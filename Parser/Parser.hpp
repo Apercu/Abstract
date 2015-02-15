@@ -37,7 +37,7 @@ class Parser {
 
 		void	_finishJob		(std::ifstream & file);
 		void	_initJob		(std::ifstream & file);
-		void	_parseThisLine	(std::string & line);
+		void	_parseThisLine	(std::string & line, int i);
 
 		Parser (Parser const & ref);
 		Parser & operator= (Parser const & ref);

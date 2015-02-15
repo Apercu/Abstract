@@ -32,14 +32,14 @@ class Operand: public IOperand {
 
 			ss << val;
 			ss >> check;
-			if (check < std::numeric_limits<T>::lowest() || (type == INT8 && check < -127)) {
-				EXECEXCEPT("A wild underflow appears");
+			if (check < std::numeric_limits<T>::lowest() || (type == INT8 && check < -128)) {
+				EXECEXCEPT("A wild underflow appears", Vm::single().getLine());
 			}
-			else if (check > std::numeric_limits<T>::max() || (type == INT8 && check > 128)) {
-				EXECEXCEPT("A wild overflow appears");
+			else if (check > std::numeric_limits<T>::max() || (type == INT8 && check > 127)) {
+				EXECEXCEPT("A wild overflow appears", Vm::single().getLine());
 			}
 			else if (ss.fail()) {
-				EXECEXCEPT("Invalid numeric representation");
+				EXECEXCEPT("Invalid numeric representation", Vm::single().getLine());
 			}
 		}
 
@@ -80,7 +80,7 @@ class Operand: public IOperand {
 			std::stringstream	res;
 
 			this->_gulpParams(one, two, type, rhs);
-			res << (one - two);
+			res << (two - one);
 			return this->_renderOperand(type, res);
 		}
 
@@ -105,9 +105,9 @@ class Operand: public IOperand {
 
 			this->_gulpParams(one, two, type, rhs);
 			if (two == 0.0) {
-				EXECEXCEPT("Division by zero, and you're not called John Skeet");
+				EXECEXCEPT("Division by zero, and you're not called John Skeet", Vm::single().getLine());
 			}
-			res << (one / two);
+			res << (two / one);
 			return this->_renderOperand(type, res);
 		}
 
@@ -120,9 +120,9 @@ class Operand: public IOperand {
 
 			this->_gulpParams(one, two, type, rhs);
 			if (two == 0.0) {
-				EXECEXCEPT("Modulus by zero, and you're not called John Skeet");
+				EXECEXCEPT("Modulus by zero, and you're not called John Skeet", Vm::single().getLine());
 			}
-			res << fmod(one, two);
+			res << fmod(two, one);
 			return this->_renderOperand(type, res);
 		}
 
