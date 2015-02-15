@@ -1,0 +1,202 @@
+push int16(-18194)
+push int8(-44)
+push int8(-94)
+push double(3836712706834.0776)
+push int32(-883415158)
+push float(1058513735234737.4)
+push int8(-78)
+push int16(-9504)
+push float(2881711662607267.5)
+push int32(-259555111)
+push float(1989751676330343.0)
+push float(2026260944548994.2)
+push double(434095545811578.6)
+push int8(-65)
+push int32(-1107218131)
+push int16(-14448)
+push int32(-1490591734)
+push int32(-599760297)
+push float(732574210688471.8)
+push int16(-8367)
+push double(2114502070564776.8)
+push int8(-70)
+push int32(-143906674)
+push int32(-1427195076)
+push int32(-619611212)
+push float(604665259690955.2)
+push int32(-1576397157)
+push int8(-18)
+push float(771063148928806.1)
+push float(1452737445011735.0)
+push int16(-24816)
+push int32(-1641453518)
+push int16(-25537)
+push float(1433313744654879.0)
+push int8(-78)
+push double(282161276461556.56)
+push double(393358330754563.2)
+push int32(-1159584710)
+push int16(-11286)
+push int32(-79731344)
+push int16(-6539)
+push int32(-1096085063)
+push int16(-2939)
+push float(1143415749259293.0)
+push float(2863424056954682.0)
+push float(1508221260271966.5)
+push int8(-31)
+push int16(-24476)
+push int16(-26667)
+push int8(-88)
+push int8(-87)
+push int32(-1785706200)
+push int8(-96)
+push int32(-1069668409)
+push int32(-1123443749)
+push int32(-1573981667)
+push int32(-1588484143)
+push int32(-62860839)
+push int8(-124)
+push double(779410919407382.6)
+push int32(-1877817796)
+push int32(-2083687454)
+push int32(-1289178307)
+push int16(-8587)
+push double(2844623965676874.0)
+push float(2346986962808296.0)
+push int8(-123)
+push int32(-1271381097)
+push int32(-1496878418)
+push int16(-7527)
+push int8(-77)
+push int16(-19726)
+push int32(-679820130)
+push int16(-24065)
+push double(1407241642381996.0)
+push int32(-2102665932)
+push double(1644611554080620.5)
+push int32(-936728659)
+push float(1878445539390668.2)
+push float(717018759762868.2)
+push float(594223641650751.2)
+push int16(-8320)
+push int16(-15115)
+push double(3172574552893638.5)
+push float(291411134367808.7)
+push int16(-29249)
+push int16(-26232)
+push int16(-5118)
+push int32(-484315489)
+push int16(-30051)
+push double(3124568850360811.0)
+push double(670798666123300.8)
+push int16(-26995)
+push float(2647696415940299.5)
+push double(273832042654976.25)
+push int8(-48)
+push int32(-216425855)
+push int16(-19096)
+push int16(-1470)
+push int16(-22777)
+
+div
+div
+div
+add
+pop
+pop
+mul
+mul
+div
+div
+add
+mul
+mul
+pop
+pop
+mul
+mul
+pop
+add
+div
+div
+mul
+add
+pop
+div
+div
+add
+div
+pop
+mul
+mul
+add
+pop
+add
+add
+div
+pop
+pop
+add
+div
+pop
+add
+add
+div
+div
+mul
+pop
+div
+add
+pop
+mul
+pop
+div
+add
+div
+add
+div
+div
+mul
+mul
+mul
+div
+add
+div
+div
+pop
+pop
+add
+add
+mul
+add
+pop
+mul
+div
+div
+div
+add
+add
+pop
+add
+div
+mul
+div
+add
+div
+mul
+div
+pop
+pop
+div
+div
+div
+div
+div
+add
+add
+div
+mul
+add
+dump
+exit
