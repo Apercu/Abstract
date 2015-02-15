@@ -104,7 +104,7 @@ class Operand: public IOperand {
 			std::stringstream	res;
 
 			this->_gulpParams(one, two, type, rhs);
-			if (two == 0.0) {
+			if (one == 0) {
 				EXECEXCEPT("Division by zero, and you're not called John Skeet", Vm::single().getLine());
 			}
 			res << (two / one);
@@ -119,7 +119,7 @@ class Operand: public IOperand {
 			std::stringstream	res;
 
 			this->_gulpParams(one, two, type, rhs);
-			if (two == 0.0) {
+			if (one == 0) {
 				EXECEXCEPT("Modulus by zero, and you're not called John Skeet", Vm::single().getLine());
 			}
 			res << fmod(two, one);
