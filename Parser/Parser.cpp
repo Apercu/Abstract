@@ -81,7 +81,7 @@ void Parser::doYourJob (void)
 	int				i = 1;
 
 	this->_initJob(file);
-	while (std::getline((this->_filename ? file : std::cin), line) && line != ";;") {
+	while (std::getline((this->_filename ? file : std::cin), line) || (line != ";;" && !this->_filename)) {
 		if (line.size() > 0 && line.at(0) != 59) {
 			this->_parseThisLine(line, i);
 		}
