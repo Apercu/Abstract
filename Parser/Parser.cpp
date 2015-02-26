@@ -15,7 +15,6 @@
 
 Parser::Parser (char * str): _filename(str)
 {
-	// "No exit instruction has been found within your program "
 	this->_firstMap["add"] = &Vm::add;
 	this->_firstMap["sub"] = &Vm::sub;
 	this->_firstMap["mul"] = &Vm::mul;
