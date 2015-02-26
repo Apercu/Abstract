@@ -130,7 +130,6 @@ void Vm::print (void)
 	IOperand const * top = *(this->_stack.begin());
 	IOperand const * tmp = this->createOperand(INT8, top->toString());
 	this->assert(tmp);
-	delete tmp;
 	std::stringstream ss;
 	int res;
 	ss << top->toString();
