@@ -20,10 +20,10 @@ Vm::Vm (void)
 
 Vm::~Vm (void)
 {
-	for (std::list<IOperand const *>::const_iterator it = this->_stack.begin(); it != this->_stack.end(); ++it) {
+	for (std::list<IOperand const *>::const_iterator it = this->_stack.begin(); it != this->_stack.end(); it++) {
 		delete *it;
 	}
-	for (std::list<Instruction *>::const_iterator it = this->_instructs.begin(); it != this->_instructs.end(); ++it) {
+	for (std::list<Instruction *>::const_iterator it = this->_instructs.begin(); it != this->_instructs.end(); it++) {
 		delete *it;
 	}
 }
@@ -122,6 +122,7 @@ void Vm::assert (IOperand const * op)
 	if (top->getType() != op->getType() && top->toString() != op->toString()) {
 		EXECEXCEPT("Assert failed", this->_line);
 	}
+	delete op;
 }
 
 void Vm::print (void)
@@ -129,6 +130,7 @@ void Vm::print (void)
 	IOperand const * top = *(this->_stack.begin());
 	IOperand const * tmp = this->createOperand(INT8, top->toString());
 	this->assert(tmp);
+	delete tmp;
 	std::stringstream ss;
 	int res;
 	ss << top->toString();
