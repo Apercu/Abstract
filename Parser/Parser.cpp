@@ -98,7 +98,7 @@ void Parser::_initJob (std::ifstream & file)
 	if (this->_filename) {
 		file.open(this->_filename);
 		if (!file.is_open()) {
-			EXECEXCEPT("The specified input can't be opened", 0);
+			throw FilesystemException();
 		}
 	}
 }

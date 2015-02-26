@@ -28,6 +28,7 @@ typedef void (Vm::*VmParams)(IOperand const * op);
 
 # define EXECEXCEPT(STR, NB)	throw ExecutionException(STR, NB, __FILE__, __LINE__);
 # define SYNTEXCEPT(STR, NB)	throw SyntaxException(STR, NB, __FILE__, __LINE__);
+# define FILEEXCEPT(STR, NB)	throw FilesystemException(STR, NB, __FILE__, __LINE__);
 
 class SyntaxException: public std::exception {
 	public:
@@ -57,8 +58,20 @@ class ExecutionException: public std::exception {
 	private:
 		std::string		_msg;
 
-		ExecutionException & operator= (ExecutionException const & ref);
 		ExecutionException (void);
+		ExecutionException & operator= (ExecutionException const & ref);
+};
+
+class BasicException: public std::exception {};
+
+class ArgumentsException: public BasicException {
+	public:
+		virtual const char * what (void) const throw ();
+};
+
+class FilesystemException: public BasicException {
+	public:
+		virtual const char * what (void) const throw ();
 };
 
 #endif

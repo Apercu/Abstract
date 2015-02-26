@@ -16,22 +16,29 @@
 #include <iostream>
 #include <sstream>
 
-int main (int ac, char ** av)
+void ft_check_arguments (int ac)
 {
 	if (ac > 2) {
-		std::cout << "Please pass one or no arguments, is that complicated?" << std::endl;
-		return (-1);
+		throw ArgumentsException();
 	}
+}
 
+int main (int ac, char ** av)
+{
 	try {
+		ft_check_arguments(ac);
 		Parser p(av[1]);
 		p.doYourJob();
 	} catch (ExecutionException & e) {
 		std::cout << e.what() << std::endl;
 	} catch (SyntaxException & e) {
 		std::cout << e.what() << std::endl;
+	} catch (ArgumentsException & e) {
+		std::cout << "Usage: " << e.what() << std::endl;
+	} catch (FilesystemException & e) {
+		std::cout << "FS: " << e.what() << std::endl;
 	} catch (std::exception & e) {
-		std::cout << e.what() << std::endl;
+		std::cout << "Unknown: " << e.what() << std::endl;
 	}
 
 	return (0);
@@ -91,4 +98,14 @@ ExecutionException::~ExecutionException (void)
 const char * ExecutionException::what (void) const throw ()
 {
 	return this->_msg.c_str();
+}
+
+const char * ArgumentsException::what (void) const throw ()
+{
+	return "Please pass one or no arguments, is that complicated?";
+}
+
+const char * FilesystemException::what (void) const throw ()
+{
+	return "The specified input can't be opened.";
 }
