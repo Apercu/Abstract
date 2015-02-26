@@ -79,6 +79,7 @@ void Parser::doYourJob (void)
 	std::ifstream	file;
 	std::string		line;
 	int				i = 1;
+	bool			execute = true;
 
 	this->_initJob(file);
 	while (std::getline((this->_filename ? file : std::cin), line)) {
@@ -86,11 +87,16 @@ void Parser::doYourJob (void)
 			break;
 		}
 		if (line.size() > 0 && line.at(0) != 59) {
-			this->_parseThisLine(line, i);
+			try {
+				this->_parseThisLine(line, i);
+			} catch (SyntaxException & e) {
+				execute = false;
+				std::cout << e.what() << std::endl;
+			}
 		}
 		++i;
 	}
-	this->_finishJob(file);
+	this->_finishJob(file, execute);
 }
 
 void Parser::_initJob (std::ifstream & file)
@@ -103,13 +109,15 @@ void Parser::_initJob (std::ifstream & file)
 	}
 }
 
-void Parser::_finishJob (std::ifstream & file)
+void Parser::_finishJob (std::ifstream & file, bool execute)
 {
 	if (file) {
 		file.close();
 	}
-	Vm::single().execute();
-	Vm::single().check();
+	if (execute) {
+		Vm::single().execute();
+		Vm::single().check();
+	}
 }
 
 Parser::~Parser (void)

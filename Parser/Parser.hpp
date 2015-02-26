@@ -35,7 +35,7 @@ class Parser {
 		std::map<std::string, VmParams>		_secondMap;
 		std::map<std::string, eOperandType>	_thirdMap;
 
-		void	_finishJob		(std::ifstream & file);
+		void	_finishJob		(std::ifstream & file, bool execute);
 		void	_initJob		(std::ifstream & file);
 		void	_parseThisLine	(std::string & line, int i);
 

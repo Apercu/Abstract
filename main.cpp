@@ -31,8 +31,6 @@ int main (int ac, char ** av)
 		p.doYourJob();
 	} catch (ExecutionException & e) {
 		std::cout << e.what() << std::endl;
-	} catch (SyntaxException & e) {
-		std::cout << e.what() << std::endl;
 	} catch (ArgumentsException & e) {
 		std::cout << "Usage: " << e.what() << std::endl;
 	} catch (FilesystemException & e) {
