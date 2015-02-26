@@ -35,6 +35,8 @@ int main (int ac, char ** av)
 		std::cout << "Usage: " << e.what() << std::endl;
 	} catch (FilesystemException & e) {
 		std::cout << "FS: " << e.what() << std::endl;
+	} catch (JustAnExitException & e) {
+		VOID(e);
 	} catch (std::exception & e) {
 		std::cout << "Unknown: " << e.what() << std::endl;
 	}
@@ -106,4 +108,9 @@ const char * ArgumentsException::what (void) const throw ()
 const char * FilesystemException::what (void) const throw ()
 {
 	return "The specified input can't be opened.";
+}
+
+const char * JustAnExitException::what (void) const throw ()
+{
+	return "This is simply an exit.";
 }

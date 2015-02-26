@@ -74,4 +74,9 @@ class FilesystemException: public BasicException {
 		virtual const char * what (void) const throw ();
 };
 
+class JustAnExitException: public BasicException {
+	public:
+		virtual const char * what (void) const throw ();
+};
+
 #endif

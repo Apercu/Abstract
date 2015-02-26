@@ -20,6 +20,12 @@ Vm::Vm (void)
 
 Vm::~Vm (void)
 {
+	for (std::list<IOperand const *>::const_iterator it = this->_stack.begin(); it != this->_stack.end(); ++it) {
+		delete *it;
+	}
+	for (std::list<Instruction *>::const_iterator it = this->_instructs.begin(); it != this->_instructs.end(); ++it) {
+		delete *it;
+	}
 }
 
 Vm::Vm (Vm const & ref)
@@ -132,13 +138,7 @@ void Vm::print (void)
 
 void Vm::exit (void)
 {
-	for (std::list<IOperand const *>::const_iterator it = this->_stack.begin(); it != this->_stack.end(); ++it) {
-		delete *it;
-	}
-	for (std::list<Instruction *>::const_iterator it = this->_instructs.begin(); it != this->_instructs.end(); ++it) {
-		delete *it;
-	}
-	std::exit(0);
+	throw JustAnExitException();
 }
 
 void Vm::check (void)
